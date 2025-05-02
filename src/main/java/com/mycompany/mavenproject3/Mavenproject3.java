@@ -2,6 +2,8 @@ package com.mycompany.mavenproject3;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Mavenproject3 extends JFrame implements Runnable {
     private String text;
@@ -66,6 +68,14 @@ public class Mavenproject3 extends JFrame implements Runnable {
     }
 
     public static void main(String[] args) {
-        new Mavenproject3("Menu yang tersedia: Americano | Pandan Latte | Aren Latte | Matcha Frappucino | Jus Apel");
+        List<Product> products = new ArrayList<>();
+        products.add(new Product(1, "P001", "Americano", "Coffee", 18000, 10));
+        products.add(new Product(2, "P002", "Pandan Latte", "Coffee", 15000, 8));
+        String text = "";
+        
+        for (Product product : products) {
+            text += " | " + product.getName() + " | ";
+        }
+        new Mavenproject3("Menu yang tersedia: " + text);
     }
 }
