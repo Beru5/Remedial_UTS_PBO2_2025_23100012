@@ -33,7 +33,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
         add(bottomPanel, BorderLayout.SOUTH);
         
         addProductButton.addActionListener(e -> {
-            new ProductForm(this, this.products).setVisible(true);
+            new ProductForm(this).setVisible(true);
         });
 
         setVisible(true);
@@ -70,7 +70,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
     }
     public void updateText() {
     text = "Menu yang tersedia:";
-    for (Product p : products) {
+    for (Product p : ProductManager.getProducts()) {
         text += " | " + p.getName();
     }
     bannerPanel.repaint(); 
@@ -78,10 +78,10 @@ public class Mavenproject3 extends JFrame implements Runnable {
 
 
     public static void main(String[] args) {
-    List<Product> products = ProductManager.getProducts(); // Ambil dari manager
+    List<Product> products = ProductManager.getProducts();
 
     String text = "";
-    for (Product product : products) {
+    for (Product product : ProductManager.getProducts()) {
         text += " | " + product.getName() + " | ";
     }
 

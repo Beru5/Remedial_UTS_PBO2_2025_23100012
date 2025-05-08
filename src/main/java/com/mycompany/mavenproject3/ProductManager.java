@@ -23,11 +23,24 @@ public class ProductManager {
     public static void addProduct(Product product) {
         products.add(product);
     }
-
+    
+ 
     public static List<Product> getProducts() {
         return new ArrayList<>(products);
     }
 
+    public static void editProduct(int index, Product updatedProduct) {
+        if (index >= 0 && index < products.size()) {
+                products.set(index, updatedProduct);
+            }
+        }
+
+    public static void deleteProduct(int index) {
+        if (index >= 0 && index < products.size()) {
+            products.remove(index);
+        }
+    }
+    
     public static String getText() {
         if (products.isEmpty()) {
             return "Belum ada produk.";

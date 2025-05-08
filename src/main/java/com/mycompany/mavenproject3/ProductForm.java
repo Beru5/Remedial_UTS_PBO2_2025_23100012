@@ -34,9 +34,8 @@ public class ProductForm extends JFrame {
     private Mavenproject3 gui;
     
 
-    public ProductForm(Mavenproject3 gui, List<Product> products) {  
+    public ProductForm(Mavenproject3 gui) {  
         this.gui = gui;
-        this.products = products;
         
         setTitle("WK. Cuan | Stok Barang");
         setSize(600, 450);
@@ -80,61 +79,118 @@ public class ProductForm extends JFrame {
         
         tableModel = new DefaultTableModel(new String[]{"Kode", "Nama", "Kategori", "Harga Jual", "Stok"}, 0);
         drinkTable = new JTable(tableModel);
-        loadProductData(products);
+        loadProductData();
         add(new JScrollPane(drinkTable), BorderLayout.CENTER);
         setVisible(true);  
         
         
- drinkTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-            int selectedRow = drinkTable.getSelectedRow();
-            if (selectedRow != -1) {
-                String selectedCode = tableModel.getValueAt(selectedRow, 0).toString();
-                String selectedPrice = tableModel.getValueAt(selectedRow, 3).toString(); // Assuming price is in column 3
-                codeField.setText(selectedCode);
-                priceField.setText(selectedPrice);
+        drinkTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+               @Override
+               public void valueChanged(ListSelectionEvent e) {
+                   int selectedRow = drinkTable.getSelectedRow();
+                   if (selectedRow != -1) {
+                       String selectedCode = tableModel.getValueAt(selectedRow, 0).toString();
+                       String selectedName = tableModel.getValueAt(selectedRow, 1).toString();
+                       String selectedCategory = tableModel.getValueAt(selectedRow, 2).toString();
+                       String selectedPrice = tableModel.getValueAt(selectedRow, 3).toString(); 
+                       String selectedStock = tableModel.getValueAt(selectedRow, 4).toString();
+
+                       codeField.setText(selectedCode);
+                       nameField.setText(selectedName);
+                       categoryField.setSelectedItem(selectedCategory);
+                       priceField.setText(selectedPrice);
+                       stockField.setText(selectedStock);
+                   }
+               }
+           });
+
+        saveButton.addActionListener(e -> {
+            try {
+                gui.updateText();
             }
-        }
-    });
+            catch (Exception ex) {
+               JOptionPane.showMessageDialog(this, "eror!", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
- saveButton.addActionListener(e -> {
-     try {
-         gui.updateText();
-     }
-     catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "eror!", "Error", JOptionPane.ERROR_MESSAGE);
-     }
- });
-         
-  addButton.addActionListener(e -> {
-    try {
-        String code = codeField.getText();
-        String name = nameField.getText();
-        String category = categoryField.getSelectedItem().toString();
-        double price = Double.parseDouble(priceField.getText());
-        int stock = Integer.parseInt(stockField.getText());
+         addButton.addActionListener(e -> {
+           try {
+               String code = codeField.getText();
+               String name = nameField.getText();
+               String category = categoryField.getSelectedItem().toString();
+               double price = Double.parseDouble(priceField.getText());
+               int stock = Integer.parseInt(stockField.getText());
 
-        int id = products.size() + 1;
-        Product product = new Product(id, code, name, category, price, stock);  // Assuming "Coffee" category and stock 10
-        
-        products.add(product);
-        tableModel.addRow(new Object[]{product.getCode(), product.getName(), product.getCategory(), product.getPrice(), product.getStock()});
+               int id = products.size() + 1;
+               Product product = new Product(id, code, name, category, price, stock); 
 
-        nameField.setText("");
-        priceField.setText("");
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Masukkan harga dalam angka!", "Error", JOptionPane.ERROR_MESSAGE);
+               ProductManager.addProduct(product);
+               tableModel.addRow(new Object[]{product.getCode(), product.getName(), product.getCategory(), product.getPrice(), product.getStock()});
+
+               codeField.setText("");
+               nameField.setText("");
+               priceField.setText("");
+               stockField.setText("");
+           } catch (NumberFormatException ex) {
+               JOptionPane.showMessageDialog(this, "Input harga hanya dalam bentuk angka!", "Error", JOptionPane.ERROR_MESSAGE);
+           }
+       });
+
+         editButton.addActionListener(e -> {
+           int selectedRow = drinkTable.getSelectedRow();
+           if (selectedRow < 0) {
+               JOptionPane.showMessageDialog(this, "Pilih produk yang ingin diedit.");
+               return;
+           }
+
+           try {
+               String code = codeField.getText();
+               String name = nameField.getText();
+               String category = (String) categoryField.getSelectedItem();
+               double price = Double.parseDouble(priceField.getText());
+               int stock = Integer.parseInt(stockField.getText());
+
+               Product updatedProduct = new Product(selectedRow + 1, code, name, category, price, stock);
+               ProductManager.editProduct(selectedRow, updatedProduct);
+               
+               codeField.setText("");
+               nameField.setText("");
+               priceField.setText("");
+               stockField.setText("");
+
+           } catch (NumberFormatException ex) {
+               JOptionPane.showMessageDialog(this, "Input tidak valid:\n" + ex);
+           }
+           loadProductData();
+           });
+
+          deleteButton.addActionListener(e -> {
+           int selectedRow = drinkTable.getSelectedRow();
+           if (selectedRow < 0) {
+               JOptionPane.showMessageDialog(this, "Pilih produk yang ingin dihapus.");
+               return;
+           }
+
+           try {
+               ProductManager.deleteProduct(selectedRow);
+           } catch (Exception ex) {
+               JOptionPane.showMessageDialog(this, "error\n" + ex);
+           }
+           loadProductData();
+           });
+
     }
-});
-    }
+    
 
-    private void loadProductData(List<Product> productList) {
-        for (Product product : productList) {
+    private void loadProductData() {
+        tableModel.setRowCount(0);
+        for (Product product : ProductManager.getProducts()) {
             tableModel.addRow(new Object[]{
                 product.getCode(), product.getName(), product.getCategory(), product.getPrice(), product.getStock()
             });
     }
 }
+
+    
     
 }
