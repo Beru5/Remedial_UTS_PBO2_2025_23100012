@@ -76,8 +76,6 @@ public class Mavenproject3 extends JFrame implements Runnable {
 
 
     public static void main(String[] args) {
-    List<Product> products = ProductManager.getProducts();
-
     String text = "";
     for (Product product : ProductManager.getProducts()) {
         text += " | " + product.getName() + " | ";
