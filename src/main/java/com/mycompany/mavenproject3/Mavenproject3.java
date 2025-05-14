@@ -7,15 +7,13 @@ import java.util.List;
 
 public class Mavenproject3 extends JFrame implements Runnable {
     private String text;
-    List<Product> products = new ArrayList<>();
     private int x;
     private int width;
     private BannerPanel bannerPanel;
     private JButton addProductButton;
 
-    public Mavenproject3(String text, List<Product> products) {
+    public Mavenproject3(String text) {
         this.text = text;
-        this.products = products;
         setTitle("WK. STI Chill");
         setSize(600, 150);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,7 +83,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
         text += " | " + product.getName() + " | ";
     }
 
-    Mavenproject3 gui = new Mavenproject3("Menu yang tersedia: " + text, products);
+    Mavenproject3 gui = new Mavenproject3("Menu yang tersedia: " + text);
 }
     }
 

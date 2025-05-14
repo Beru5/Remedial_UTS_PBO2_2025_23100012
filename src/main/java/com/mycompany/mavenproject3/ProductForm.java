@@ -30,7 +30,7 @@ public class ProductForm extends JFrame {
     private JButton editButton;
     private JButton deleteButton;
     
-    List<Product> products = new ArrayList<>(); 
+    
     private Mavenproject3 gui;
     
 
@@ -121,7 +121,7 @@ public class ProductForm extends JFrame {
                double price = Double.parseDouble(priceField.getText());
                int stock = Integer.parseInt(stockField.getText());
 
-               int id = products.size() + 1;
+               int id = ProductManager.getProducts().size() + 1;
                Product product = new Product(id, code, name, category, price, stock); 
 
                ProductManager.addProduct(product);
