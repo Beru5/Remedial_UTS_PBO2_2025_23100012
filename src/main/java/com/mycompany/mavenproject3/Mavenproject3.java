@@ -11,6 +11,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
     private int width;
     private BannerPanel bannerPanel;
     private JButton addProductButton;
+    private JButton sellProductButton;
 
     public Mavenproject3(String text) {
         this.text = text;
@@ -29,10 +30,20 @@ public class Mavenproject3 extends JFrame implements Runnable {
         addProductButton = new JButton("Kelola Produk");
         bottomPanel.add(addProductButton);
         add(bottomPanel, BorderLayout.SOUTH);
+        sellProductButton = new JButton("Jual Produk");
+        bottomPanel.add(sellProductButton);
+        add(bottomPanel, BorderLayout.SOUTH);
         
         addProductButton.addActionListener(e -> {
             new ProductForm(this).setVisible(true);
         });
+        sellProductButton.addActionListener(e -> {
+            new FormPenjualan(this).setVisible(true);
+        });
+        
+
+        
+        
 
         setVisible(true);
 
@@ -69,7 +80,12 @@ public class Mavenproject3 extends JFrame implements Runnable {
     public void updateText() {
     text = "Menu yang tersedia:";
     for (Product p : ProductManager.getProducts()) {
+        if (p.getStock() < 1){
+            text += "";
+        }
+        else{
         text += " | " + p.getName();
+        }
     }
     bannerPanel.repaint(); 
 }
@@ -77,8 +93,13 @@ public class Mavenproject3 extends JFrame implements Runnable {
 
     public static void main(String[] args) {
     String text = "";
-    for (Product product : ProductManager.getProducts()) {
-        text += " | " + product.getName() + " | ";
+    for (Product p : ProductManager.getProducts()) {
+        if (p.getStock() < 1){
+            text += "";
+        }
+        else{
+        text += " | " + p.getName();
+        }
     }
 
     Mavenproject3 gui = new Mavenproject3("Menu yang tersedia: " + text);

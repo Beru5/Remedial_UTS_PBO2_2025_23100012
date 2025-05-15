@@ -15,6 +15,7 @@ public class Product {
     private String category;
     private double price;
     private int stock;
+    public int quantity;
 
     public Product(int id, String code, String name, String category, double price, int stock) {
         this.id = id;
@@ -32,4 +33,7 @@ public class Product {
     public double getPrice() { return price; }
     public int getStock() { return stock; }
     public void setStock(int stock) { this.stock = stock; }
+    public int updatedStock(){
+        return stock - quantity;
+    }
 }
