@@ -12,6 +12,8 @@ public class Mavenproject3 extends JFrame implements Runnable {
     private BannerPanel bannerPanel;
     private JButton addProductButton;
     private JButton sellProductButton;
+    private ProductForm ProductForm;
+    private FormPenjualan FormPenjualan;
 
     public Mavenproject3(String text) {
         this.text = text;
@@ -29,20 +31,20 @@ public class Mavenproject3 extends JFrame implements Runnable {
         JPanel bottomPanel = new JPanel();
         addProductButton = new JButton("Kelola Produk");
         bottomPanel.add(addProductButton);
-        add(bottomPanel, BorderLayout.SOUTH);
         sellProductButton = new JButton("Jual Produk");
         bottomPanel.add(sellProductButton);
         add(bottomPanel, BorderLayout.SOUTH);
         
+        
+        ProductForm = new ProductForm(this);
+        FormPenjualan = new FormPenjualan(this, ProductForm); 
+        
         addProductButton.addActionListener(e -> {
-            new ProductForm(this).setVisible(true);
+            ProductForm.setVisible(true);
         });
         sellProductButton.addActionListener(e -> {
-            new FormPenjualan(this).setVisible(true);
+            FormPenjualan.setVisible(true);
         });
-        
-
-        
         
 
         setVisible(true);
@@ -97,7 +99,7 @@ public class Mavenproject3 extends JFrame implements Runnable {
         if (p.getStock() < 1){
             text += "";
         }
-        else{
+    else{
         text += " | " + p.getName();
         }
     }

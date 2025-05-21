@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductManager {
-    private static final List<Product> products = new ArrayList<>();
+    static final List<Product> products = new ArrayList<>();
         
     static {
         products.add(new Product(1, "P001", "Americano", "Coffee", 18000, 0));
@@ -30,6 +30,12 @@ public class ProductManager {
     }
 
     public static void editProduct(int index, Product updatedProduct) {
+        if (index >= 0 && index < products.size()) {
+                products.set(index, updatedProduct);
+            }
+        }
+    
+    public static void sellProduct(int index, Product updatedProduct) {
         if (index >= 0 && index < products.size()) {
                 products.set(index, updatedProduct);
             }

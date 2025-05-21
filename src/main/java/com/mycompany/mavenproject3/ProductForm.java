@@ -25,13 +25,12 @@ public class ProductForm extends JFrame {
     private JComboBox<String> categoryField;
     private JTextField priceField;
     private JTextField stockField;
-    private JButton saveButton;
     private JButton addButton;
     private JButton editButton;
     private JButton deleteButton;
     
-    
     private Mavenproject3 gui;
+    
     
 
     public ProductForm(Mavenproject3 gui) {  
@@ -66,14 +65,13 @@ public class ProductForm extends JFrame {
         stockField = new JTextField(2);
         formPanel.add(stockField);
         
-        saveButton = new JButton("Simpan");
-        formPanel.add(saveButton);
         addButton = new JButton("Tambah");
         formPanel.add(addButton);
         editButton = new JButton("Edit");
         formPanel.add(editButton);
         deleteButton = new JButton("Hapus");
         formPanel.add(deleteButton);
+
         
         add(formPanel, BorderLayout.EAST);
         
@@ -81,7 +79,6 @@ public class ProductForm extends JFrame {
         drinkTable = new JTable(tableModel);
         loadProductData();
         add(new JScrollPane(drinkTable), BorderLayout.CENTER);
-        setVisible(true);  
         
         
         drinkTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -104,14 +101,6 @@ public class ProductForm extends JFrame {
                }
            });
 
-        saveButton.addActionListener(e -> {
-            try {
-                gui.updateText();
-            }
-            catch (Exception ex) {
-               JOptionPane.showMessageDialog(this, "eror!", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-        });
 
          addButton.addActionListener(e -> {
            try {
@@ -134,6 +123,7 @@ public class ProductForm extends JFrame {
            } catch (NumberFormatException ex) {
                JOptionPane.showMessageDialog(this, "Input harga hanya dalam bentuk angka!", "Error", JOptionPane.ERROR_MESSAGE);
            }
+           loadProductData();
        });
 
          editButton.addActionListener(e -> {
@@ -173,22 +163,30 @@ public class ProductForm extends JFrame {
 
            try {
                ProductManager.deleteProduct(selectedRow);
+               
+               codeField.setText("");
+               nameField.setText("");
+               priceField.setText("");
+               stockField.setText("");
            } catch (Exception ex) {
                JOptionPane.showMessageDialog(this, "error\n" + ex);
            }
            loadProductData();
            });
+          
+          
 
     }
     
 
-    private void loadProductData() {
+    public void loadProductData() {
         tableModel.setRowCount(0);
         for (Product product : ProductManager.getProducts()) {
             tableModel.addRow(new Object[]{
                 product.getCode(), product.getName(), product.getCategory(), product.getPrice(), product.getStock()
-            });
-    }
+            });}
+        gui.updateText();
+    
 }
 
     
