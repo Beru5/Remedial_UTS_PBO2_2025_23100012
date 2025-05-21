@@ -16,8 +16,8 @@ public class ProductManager {
     static final List<Product> products = new ArrayList<>();
         
     static {
-        products.add(new Product(1, "P001", "Americano", "Coffee", 18000, 0));
-        products.add(new Product(2, "P002", "Pandan Latte", "Coffee", 15000, 8));
+        products.add(new Product( "P001", "Americano", "Coffee", 18000, 0));
+        products.add(new Product( "P002", "Pandan Latte", "Coffee", 15000, 8));
     }
 
     public static void addProduct(Product product) {

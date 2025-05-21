@@ -12,14 +12,16 @@ public class Mavenproject3 extends JFrame implements Runnable {
     private BannerPanel bannerPanel;
     private JButton addProductButton;
     private JButton sellProductButton;
+    private JButton customerButton;
     private ProductForm ProductForm;
     private FormPenjualan FormPenjualan;
+    private CustomerForm CustomerForm;
 
     public Mavenproject3(String text) {
         this.text = text;
         setTitle("WK. STI Chill");
         setSize(600, 150);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
@@ -33,17 +35,23 @@ public class Mavenproject3 extends JFrame implements Runnable {
         bottomPanel.add(addProductButton);
         sellProductButton = new JButton("Jual Produk");
         bottomPanel.add(sellProductButton);
+        customerButton = new JButton("Kelola Pelanggan");
+        bottomPanel.add(customerButton);
         add(bottomPanel, BorderLayout.SOUTH);
         
         
         ProductForm = new ProductForm(this);
         FormPenjualan = new FormPenjualan(this, ProductForm); 
+        CustomerForm = new CustomerForm(this); 
         
         addProductButton.addActionListener(e -> {
             ProductForm.setVisible(true);
         });
         sellProductButton.addActionListener(e -> {
             FormPenjualan.setVisible(true);
+        });
+        customerButton.addActionListener(e -> {
+            CustomerForm.setVisible(true);
         });
         
 

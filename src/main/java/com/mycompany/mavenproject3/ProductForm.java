@@ -13,7 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +37,7 @@ public class ProductForm extends JFrame {
         
         setTitle("WK. Cuan | Stok Barang");
         setSize(600, 450);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         
@@ -111,7 +110,7 @@ public class ProductForm extends JFrame {
                int stock = Integer.parseInt(stockField.getText());
 
                int id = ProductManager.getProducts().size() + 1;
-               Product product = new Product(id, code, name, category, price, stock); 
+               Product product = new Product(code, name, category, price, stock); 
 
                ProductManager.addProduct(product);
                tableModel.addRow(new Object[]{product.getCode(), product.getName(), product.getCategory(), product.getPrice(), product.getStock()});
@@ -140,7 +139,7 @@ public class ProductForm extends JFrame {
                double price = Double.parseDouble(priceField.getText());
                int stock = Integer.parseInt(stockField.getText());
 
-               Product updatedProduct = new Product(selectedRow + 1, code, name, category, price, stock);
+               Product updatedProduct = new Product(code, name, category, price, stock);
                ProductManager.editProduct(selectedRow, updatedProduct);
                
                codeField.setText("");

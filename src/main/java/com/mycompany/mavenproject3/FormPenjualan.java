@@ -15,7 +15,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class FormPenjualan extends JFrame{
     private JTable tabelPenjualan;
@@ -35,7 +34,7 @@ public class FormPenjualan extends JFrame{
         
         setTitle("WK. Cuan | Jual Barang");
         setSize(300, 250);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         

@@ -9,6 +9,7 @@ package com.mycompany.mavenproject3;
  * @author ASUS
  */
 public class Product {
+    private static int nextID = 1;
     private int id;
     private String code;
     private String name;
@@ -17,8 +18,8 @@ public class Product {
     private int stock;
     public int quantity;
 
-    public Product(int id, String code, String name, String category, double price, int stock) {
-        this.id = id;
+    public Product(String code, String name, String category, double price, int stock) {
+        this.id = nextID++;
         this.code = code;
         this.name = name;
         this.category = category;
